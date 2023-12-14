@@ -39,6 +39,20 @@ def display_questions(active_questions):
         )
         i += 1
 
+def get_chosen_one():
+        try:
+            chosen_one = input("Enter the number of the question you want to answer: ")
+            chosen_one = int(chosen_one) - 1
+        except ValueError:
+            console.print("[bold red] That's not a number :([/bold red]")
+            return get_chosen_one()
+        
+        if not(chosen_one>=0 and chosen_one<=4):
+            console.print("[bold red] The number has to be between 1 and 5[/bold red]")
+            return get_chosen_one()
+        
+        return chosen_one
+
 
 def check_answer(user_answer, correct_answer):
     if fuzz.ratio(user_answer, correct_answer) > 80:
@@ -72,8 +86,7 @@ def get_quiz(number_of_rounds):
         print("Choose your question:")
         display_questions(active_questions)
 
-        chosen_one = input("Enter the number of the question you want to answer: ")
-        chosen_one = int(chosen_one) - 1
+        chosen_one = get_chosen_one()
         console.print(
             Panel(
                 f"[bold magenta]{active_questions.iloc[chosen_one].question}[/bold magenta]",
